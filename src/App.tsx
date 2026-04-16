@@ -1,6 +1,8 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type MouseEvent, type ReactNode } from "react";
 import {
   ArrowRight,
+  ChevronLeft,
+  ChevronRight,
   ClipboardList,
   Cog,
   Drill,
@@ -91,21 +93,42 @@ function Reveal({
 const services = [
   {
     icon: Factory,
-    title: "Fabricacion metalmecanica pesada",
+    title: "Ingenieria y fabricacion a medida",
     description:
-      "Tolvas, chutes, estructuras y componentes para faenas mineras con trazabilidad completa de materiales.",
+      "Desarrollamos y ejecutamos soluciones metalmecanicas para operacion minera e industrial, sin comercializar productos de catalogo.",
   },
   {
     icon: Wrench,
     title: "Mantenimiento industrial en terreno",
     description:
-      "Paradas programadas y correctivos con cuadrillas certificadas para reducir tiempos muertos en planta.",
+      "Atendemos paradas programadas y correctivos con equipos certificados para sostener continuidad operativa.",
   },
   {
     icon: Drill,
     title: "Montaje de equipos criticos",
     description:
-      "Alineamiento, montaje y puesta en marcha de sistemas metalicos bajo estandares de seguridad minera.",
+      "Realizamos alineamiento, montaje y puesta en marcha de sistemas metalicos bajo estandares estrictos de seguridad.",
+  },
+];
+
+const serviceDifferentials = [
+  {
+    icon: ClipboardList,
+    title: "Alcance tecnico por frente de trabajo",
+    description:
+      "Definimos actividades, recursos, secuencia y criterios de aceptacion para cada servicio antes de iniciar ejecucion.",
+  },
+  {
+    icon: HardHat,
+    title: "Ejecucion segura en terreno minero",
+    description:
+      "Operamos con personal habilitado, control de riesgos en sitio y coordinacion con protocolos HSEC del mandante.",
+  },
+  {
+    icon: Cog,
+    title: "Trazabilidad y control de calidad",
+    description:
+      "Documentamos avances, verificaciones y cierre tecnico para asegurar continuidad operativa y cumplimiento contractual.",
   },
 ];
 
@@ -168,6 +191,21 @@ const steps = [
   },
 ];
 
+const aboutPoints = [
+  "Somos una empresa argentina con base operativa en el NOA y cobertura nacional.",
+  "Prestamos servicios de ingenieria, fabricacion, montaje y mantenimiento para industria y mineria.",
+  "No comercializamos productos en serie: cada servicio se define segun objetivo, contexto y criticidad.",
+];
+
+const navItems = [
+  { id: "inicio", label: "Inicio" },
+  { id: "servicios", label: "Servicios" },
+  { id: "sobre-nosotros", label: "Nosotros" },
+  { id: "proceso", label: "Proceso" },
+  { id: "proyectos", label: "Casos" },
+  { id: "contacto", label: "Contacto" },
+];
+
 /* ── StatCard ────────────────────────────────────────────────────────────── */
 function StatCard({
   value,
@@ -203,6 +241,9 @@ function StatCard({
 
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("inicio");
+  const [servicesIndex, setServicesIndex] = useState(0);
+  const [projectsIndex, setProjectsIndex] = useState(0);
   const statsRef = useRef<HTMLDivElement>(null);
   const [statsVisible, setStatsVisible] = useState(false);
 
@@ -228,22 +269,90 @@ export default function App() {
     return () => obs.disconnect();
   }, []);
 
+  useEffect(() => {
+    const sectionIds = navItems.map((item) => item.id);
+
+    const updateActiveSection = () => {
+      const scrollProbe = window.scrollY + 140;
+      let currentSection = sectionIds[0];
+
+      for (const id of sectionIds) {
+        const section = document.getElementById(id);
+        if (!section) continue;
+        if (scrollProbe >= section.offsetTop) {
+          currentSection = id;
+        }
+      }
+
+      const atBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 2;
+      if (atBottom) {
+        currentSection = sectionIds[sectionIds.length - 1];
+      }
+
+      setActiveSection(currentSection);
+    };
+
+    updateActiveSection();
+    window.addEventListener("scroll", updateActiveSection, { passive: true });
+    window.addEventListener("resize", updateActiveSection);
+
+    return () => {
+      window.removeEventListener("scroll", updateActiveSection);
+      window.removeEventListener("resize", updateActiveSection);
+    };
+  }, []);
+
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setServicesIndex((prev) => (prev + 1) % services.length);
+    }, 5200);
+    return () => window.clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setProjectsIndex((prev) => (prev + 1) % projects.length);
+    }, 5800);
+    return () => window.clearInterval(id);
+  }, []);
+
+  const prevService = () =>
+    setServicesIndex((prev) => (prev - 1 + services.length) % services.length);
+  const nextService = () =>
+    setServicesIndex((prev) => (prev + 1) % services.length);
+  const prevProject = () =>
+    setProjectsIndex((prev) => (prev - 1 + projects.length) % projects.length);
+  const nextProject = () =>
+    setProjectsIndex((prev) => (prev + 1) % projects.length);
+
+  const handleNavClick = (id: string) => (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    const section = document.getElementById(id);
+    if (!section) return;
+    setActiveSection(id);
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.history.replaceState(null, "", `#${id}`);
+  };
+
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100">
-      {/* ── Sticky Nav ── */}
+      {/* ── Command Nav ── */}
       <nav
         aria-label="Navegacion principal"
         className={`fixed left-0 right-0 top-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "border-b border-zinc-800/80 bg-zinc-950/90 shadow-lg shadow-black/30 backdrop-blur-md"
+            ? "bg-zinc-950/65 shadow-lg shadow-black/30 backdrop-blur-xl"
             : "bg-transparent"
         }`}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 lg:px-8">
           <a
-            href="/"
+            href="#inicio"
+            onClick={handleNavClick("inicio")}
             aria-label="Luna Metal Industrial - Inicio"
-            className="group flex items-center gap-3"
+            className="group hidden items-center gap-3 md:flex"
           >
             <div className="grid h-11 w-11 place-items-center rounded-md bg-amber-500 text-zinc-950 shadow-md shadow-amber-500/20 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-amber-500/40">
               <HardHat size={23} strokeWidth={2.5} />
@@ -253,13 +362,38 @@ export default function App() {
                 Luna Metal
               </p>
               <p className="text-xs uppercase tracking-[0.25em] text-zinc-400">
-                Industrial Mining Solutions
+                Servicios industriales para mineria
               </p>
             </div>
           </a>
+
+          <div className="command-nav relative flex min-w-0 flex-1 items-center justify-center overflow-x-auto rounded-2xl border border-zinc-700/70 bg-zinc-900/75 px-2 py-2 shadow-xl shadow-black/35 backdrop-blur-xl">
+            <div className="pointer-events-none absolute inset-0 rounded-2xl border border-white/5" />
+            <div className="pointer-events-none absolute left-6 right-6 top-0 h-px bg-linear-to-r from-transparent via-amber-300/40 to-transparent" />
+            <div className="flex min-w-max items-center gap-1">
+              {navItems.map((item) => {
+                const active = activeSection === item.id;
+                return (
+                  <a
+                    key={item.id}
+                    href={`#${item.id}`}
+                    onClick={handleNavClick(item.id)}
+                    className={`nav-segment group relative px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] transition-all duration-300 sm:px-4 ${
+                      active
+                        ? "bg-amber-500 text-zinc-950 shadow-md shadow-amber-500/25"
+                        : "text-zinc-300 hover:bg-zinc-800/90 hover:text-zinc-100"
+                    }`}
+                  >
+                    <span className="relative z-10">{item.label}</span>
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+
           <a
             href="#contacto"
-            className="rounded-md border border-amber-500/60 px-4 py-2 text-sm font-semibold uppercase tracking-wider text-amber-300 transition-all duration-200 hover:bg-amber-500 hover:text-zinc-950 hover:shadow-md hover:shadow-amber-500/25"
+            className="hidden rounded-md border border-amber-500/60 px-4 py-2 text-sm font-semibold uppercase tracking-wider text-amber-300 transition-all duration-200 hover:bg-amber-500 hover:text-zinc-950 hover:shadow-md hover:shadow-amber-500/25 lg:inline-flex"
           >
             Cotizar proyecto
           </a>
@@ -267,7 +401,7 @@ export default function App() {
       </nav>
 
       {/* ── Hero ── */}
-      <header className="relative overflow-hidden pt-24">
+      <header id="inicio" className="relative overflow-hidden pt-24">
         <div
           className="blob absolute -left-20 top-14 h-80 w-80 rounded-full bg-amber-500/20 blur-3xl"
           aria-hidden="true"
@@ -294,20 +428,20 @@ export default function App() {
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-300 opacity-60" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-amber-300" />
                 </span>
-                Partner metalurgico para la gran mineria
+                Empresa argentina de servicios metalurgicos
               </span>
 
               <h1 className="font-heading text-4xl uppercase leading-tight text-zinc-100 sm:text-5xl lg:text-6xl">
-                Ingenieria y fabricacion{" "}
+                Servicios de ingenieria y ejecucion{" "}
                 <span className="gradient-text">metalurgica</span> que sostiene
                 la operacion minera
               </h1>
 
               <p className="max-w-2xl text-base leading-relaxed text-zinc-300 sm:text-lg">
-                Diseñamos, fabricamos y montamos soluciones metalmecanicas de
-                alto desgaste para plantas de chancado, molienda y transporte de
-                mineral. Estandares de seguridad, tiempos exigentes y enfoque
-                total en continuidad operacional.
+                Brindamos servicios de diagnostico, ingenieria, fabricacion a
+                medida y montaje en campo para operaciones de alta exigencia.
+                Trabajamos por proyecto, con foco en seguridad, cumplimiento y
+                continuidad operacional.
               </p>
 
               <div className="flex flex-wrap gap-4">
@@ -348,7 +482,7 @@ export default function App() {
               <div className="absolute inset-0 rounded-2xl bg-linear-to-t from-zinc-950/60 via-transparent to-transparent" />
               <div className="absolute bottom-5 left-5 right-5 rounded-xl border border-zinc-700/60 bg-zinc-950/80 p-4 backdrop-blur-md">
                 <p className="text-xs uppercase tracking-[0.2em] text-zinc-400">
-                  Proyecto destacado
+                  Servicio destacado
                 </p>
                 <p className="mt-1 font-semibold text-zinc-100">
                   Reingenieria estructural en planta concentradora
@@ -379,7 +513,7 @@ export default function App() {
 
       <main className="mx-auto flex w-full max-w-7xl flex-col gap-24 px-6 pb-24 pt-20 lg:px-10">
         {/* ── Services ── */}
-        <section aria-labelledby="servicios-heading">
+        <section id="servicios" aria-labelledby="servicios-heading">
           <Reveal>
             <div className="mb-10 text-center">
               <p className="text-xs uppercase tracking-[0.22em] text-amber-300">
@@ -394,8 +528,72 @@ export default function App() {
             </div>
           </Reveal>
 
+          <Reveal>
+            <div className="relative mb-8 overflow-hidden rounded-2xl border border-zinc-800/80 bg-zinc-900/45 p-4 backdrop-blur-sm sm:p-6">
+              <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-amber-500/5 via-transparent to-cyan-400/5" />
+              <div className="relative overflow-hidden">
+                <div
+                  className="flex transition-transform duration-700 ease-out"
+                  style={{ transform: `translateX(-${servicesIndex * 100}%)` }}
+                >
+                  {services.map(({ icon: Icon, title, description }) => (
+                    <article key={title} className="min-w-full px-1">
+                      <div className="rounded-xl border border-zinc-800/80 bg-linear-to-b from-zinc-900/80 to-zinc-950/70 p-6 sm:p-8">
+                        <div className="mb-4 inline-flex rounded-lg bg-zinc-800/80 p-3 text-amber-300">
+                          <Icon size={22} />
+                        </div>
+                        <h3 className="font-heading text-2xl uppercase text-zinc-100">
+                          {title}
+                        </h3>
+                        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-zinc-300 sm:text-base">
+                          {description}
+                        </p>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </div>
+
+              <div className="relative mt-5 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  {services.map((item, idx) => (
+                    <button
+                      key={item.title}
+                      type="button"
+                      onClick={() => setServicesIndex(idx)}
+                      aria-label={`Ir al servicio ${idx + 1}`}
+                      className={`h-2.5 rounded-full transition-all duration-300 ${
+                        idx === servicesIndex
+                          ? "w-8 bg-amber-400"
+                          : "w-2.5 bg-zinc-600 hover:bg-zinc-400"
+                      }`}
+                    />
+                  ))}
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={prevService}
+                    aria-label="Servicio anterior"
+                    className="grid h-9 w-9 place-items-center rounded-md border border-zinc-700 bg-zinc-900/80 text-zinc-200 transition hover:border-amber-400/60 hover:text-amber-300"
+                  >
+                    <ChevronLeft size={16} />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={nextService}
+                    aria-label="Servicio siguiente"
+                    className="grid h-9 w-9 place-items-center rounded-md border border-zinc-700 bg-zinc-900/80 text-zinc-200 transition hover:border-amber-400/60 hover:text-amber-300"
+                  >
+                    <ChevronRight size={16} />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
           <div className="grid gap-6 md:grid-cols-3">
-            {services.map(({ icon: Icon, title, description }, i) => (
+            {serviceDifferentials.map(({ icon: Icon, title, description }, i) => (
               <Reveal key={title} delay={i * 120}>
                 <article className="group relative h-full overflow-hidden rounded-xl border border-zinc-800/80 bg-linear-to-b from-zinc-900/80 to-zinc-900/40 p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-amber-400/50 hover:shadow-xl hover:shadow-black/30">
                   <div
@@ -419,7 +617,49 @@ export default function App() {
         </section>
 
         {/* ── How we work ── */}
-        <section aria-labelledby="proceso-heading">
+        <section id="sobre-nosotros" aria-labelledby="sobre-nosotros-heading">
+          <Reveal>
+            <div className="grid gap-8 rounded-2xl border border-zinc-800/70 bg-linear-to-br from-zinc-900/70 to-zinc-950/90 p-7 shadow-inner shadow-black/20 lg:grid-cols-[1.05fr_0.95fr] lg:p-10">
+              <div>
+                <p className="text-xs uppercase tracking-[0.22em] text-amber-300">
+                  Sobre nosotros
+                </p>
+                <h2
+                  id="sobre-nosotros-heading"
+                  className="mt-3 font-heading text-3xl uppercase text-zinc-100 sm:text-4xl"
+                >
+                  Equipo argentino especializado en servicios industriales
+                </h2>
+                <p className="mt-4 text-sm leading-relaxed text-zinc-400">
+                  En Luna Metal trabajamos como socio tecnico para empresas que
+                  necesitan resolver desafios operativos complejos. Nuestra
+                  propuesta se centra en prestar servicios de principio a fin,
+                  no en vender productos estandar.
+                </p>
+              </div>
+
+              <div className="space-y-3">
+                {aboutPoints.map((point) => (
+                  <div
+                    key={point}
+                    className="flex items-start gap-3 rounded-lg border border-zinc-800/80 bg-zinc-900/60 p-4"
+                  >
+                    <ShieldCheck
+                      size={18}
+                      className="mt-0.5 shrink-0 text-amber-300"
+                    />
+                    <p className="text-sm leading-relaxed text-zinc-300">
+                      {point}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+        </section>
+
+        {/* ── How we work ── */}
+        <section id="proceso" aria-labelledby="proceso-heading">
           <Reveal>
             <div className="mb-10 text-center">
               <p className="text-xs uppercase tracking-[0.22em] text-amber-300">
@@ -472,7 +712,7 @@ export default function App() {
                   id="proyectos-heading"
                   className="mt-4 font-heading text-3xl uppercase text-zinc-100 sm:text-4xl"
                 >
-                  Ejecutamos trabajos de alto impacto para grandes mineras
+                  Ejecutamos servicios de alto impacto para grandes operaciones
                 </h2>
                 <p className="mt-4 text-sm leading-relaxed text-zinc-400">
                   Coordinamos ingenieria, taller y montaje en terreno para
@@ -497,32 +737,73 @@ export default function App() {
               </div>
             </Reveal>
 
-            <div className="grid gap-4 sm:grid-cols-2">
-              {projects.map((project, i) => (
-                <Reveal key={project.title} delay={i * 100}>
-                  <article className="group overflow-hidden rounded-xl border border-zinc-800/60 bg-zinc-950 transition-all duration-300 hover:border-amber-400/30 hover:shadow-lg hover:shadow-black/40">
-                    <div className="overflow-hidden">
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        width={600}
-                        height={400}
-                        className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        loading="lazy"
-                      />
-                    </div>
-                    <div className="p-4">
-                      <p className="text-xs uppercase tracking-[0.18em] text-amber-400/70">
-                        {project.location}
-                      </p>
-                      <p className="mt-1.5 text-sm font-semibold leading-snug text-zinc-100">
-                        {project.title}
-                      </p>
-                    </div>
-                  </article>
-                </Reveal>
-              ))}
-            </div>
+            <Reveal>
+              <div className="relative overflow-hidden rounded-xl border border-zinc-800/60 bg-zinc-950/70">
+                <div
+                  className="flex transition-transform duration-700 ease-out"
+                  style={{ transform: `translateX(-${projectsIndex * 100}%)` }}
+                >
+                  {projects.map((project) => (
+                    <article key={project.title} className="min-w-full">
+                      <div className="relative h-72 overflow-hidden sm:h-80">
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          width={1200}
+                          height={800}
+                          className="h-full w-full object-cover"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-linear-to-t from-zinc-950/90 via-zinc-950/30 to-transparent" />
+                        <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6">
+                          <p className="text-xs uppercase tracking-[0.18em] text-amber-300/90">
+                            {project.location}
+                          </p>
+                          <p className="mt-1 text-lg font-semibold text-zinc-100 sm:text-xl">
+                            {project.title}
+                          </p>
+                        </div>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+
+                <div className="absolute right-3 top-3 flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={prevProject}
+                    aria-label="Proyecto anterior"
+                    className="grid h-9 w-9 place-items-center rounded-md border border-zinc-600/90 bg-zinc-950/70 text-zinc-100 backdrop-blur-md transition hover:border-amber-400/60 hover:text-amber-300"
+                  >
+                    <ChevronLeft size={16} />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={nextProject}
+                    aria-label="Proyecto siguiente"
+                    className="grid h-9 w-9 place-items-center rounded-md border border-zinc-600/90 bg-zinc-950/70 text-zinc-100 backdrop-blur-md transition hover:border-amber-400/60 hover:text-amber-300"
+                  >
+                    <ChevronRight size={16} />
+                  </button>
+                </div>
+
+                <div className="absolute bottom-3 right-3 flex items-center gap-2 rounded-full border border-zinc-700/80 bg-zinc-950/75 px-3 py-1.5 backdrop-blur-md">
+                  {projects.map((project, idx) => (
+                    <button
+                      key={project.title}
+                      type="button"
+                      onClick={() => setProjectsIndex(idx)}
+                      aria-label={`Ir al proyecto ${idx + 1}`}
+                      className={`h-2 rounded-full transition-all duration-300 ${
+                        idx === projectsIndex
+                          ? "w-7 bg-amber-300"
+                          : "w-2 bg-zinc-500 hover:bg-zinc-300"
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </Reveal>
           </div>
         </section>
 
@@ -552,41 +833,41 @@ export default function App() {
                     <span className="gradient-text">ventaja operativa</span>
                   </h2>
                   <p className="mt-3 max-w-xl text-sm leading-relaxed text-zinc-300">
-                    Agende una reunion tecnica y reciba una propuesta con
-                    alcance, cronograma y plan de ejecucion para su operacion
-                    minera.
+                    Agende una reunion tecnica y reciba una propuesta de
+                    servicio con alcance, cronograma y plan de ejecucion para su
+                    operacion minera o industrial.
                   </p>
                   <div className="mt-5 flex flex-col gap-3 text-sm text-zinc-300 sm:flex-row sm:flex-wrap sm:gap-6">
                     <a
-                      href="tel:+56912345678"
+                      href="tel:+5493871234567"
                       className="inline-flex items-center gap-2 transition-colors hover:text-amber-300"
                     >
-                      <Phone size={15} className="text-amber-300" /> +56 9 1234
-                      5678
+                      <Phone size={15} className="text-amber-300" /> +54 9 387
+                      123 4567
                     </a>
                     <a
-                      href="mailto:ventas@lunametal.cl"
+                      href="mailto:contacto@lunametal.com.ar"
                       className="inline-flex items-center gap-2 transition-colors hover:text-amber-300"
                     >
                       <Mail size={15} className="text-amber-300" />{" "}
-                      ventas@lunametal.cl
+                      contacto@lunametal.com.ar
                     </a>
                     <span className="inline-flex items-center gap-2">
-                      <MapPin size={15} className="text-amber-300" />{" "}
-                      Antofagasta, Chile
+                      <MapPin size={15} className="text-amber-300" /> Salta,
+                      Argentina
                     </span>
                   </div>
                 </div>
 
                 <a
-                  href="mailto:ventas@lunametal.cl"
+                  href="mailto:contacto@lunametal.com.ar"
                   className="group relative inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-amber-500 px-7 py-4 text-sm font-bold uppercase tracking-[0.18em] text-zinc-950 transition-all duration-200 hover:bg-amber-400 hover:shadow-xl hover:shadow-amber-500/40"
                 >
                   <span
                     className="absolute inset-0 rounded-xl ring-0 ring-amber-400/50 transition-all duration-300 group-hover:ring-4"
                     aria-hidden="true"
                   />
-                  Hablar con ventas
+                  Hablar con un asesor tecnico
                   <ArrowRight
                     size={16}
                     className="transition-transform duration-200 group-hover:translate-x-1"
@@ -620,33 +901,33 @@ export default function App() {
                   Luna Metal Industrial
                 </p>
                 <p className="text-xs uppercase tracking-[0.22em] text-zinc-500">
-                  Industrial Mining Solutions
+                  Servicios industriales para mineria
                 </p>
               </div>
             </div>
 
             <p className="mt-4 text-sm leading-relaxed text-zinc-400">
-              Fabricacion metalmecanica, mantenimiento industrial y montaje de
-              equipos criticos para operaciones mineras que exigen continuidad,
+              Prestamos servicios de ingenieria aplicada, fabricacion a medida,
+              mantenimiento y montaje para operaciones que exigen continuidad,
               seguridad y cumplimiento.
             </p>
 
             <div className="mt-5 flex flex-wrap gap-3">
               <a
-                href="https://wa.me/56912345678"
+                href="https://wa.me/5493871234567"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-emerald-300 transition-all duration-200 hover:border-emerald-400/60 hover:bg-emerald-500/15"
               >
                 <MessageCircle size={14} />
-                WhatsApp comercial
+                WhatsApp tecnico
               </a>
               <a
-                href="mailto:ventas@lunametal.cl"
+                href="mailto:contacto@lunametal.com.ar"
                 className="inline-flex items-center gap-2 rounded-full border border-zinc-700/70 bg-zinc-900/70 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-300 transition-all duration-200 hover:border-amber-500/40 hover:text-amber-300"
               >
                 <Mail size={14} />
-                Ventas tecnicas
+                Contacto tecnico
               </a>
             </div>
           </div>
@@ -657,13 +938,19 @@ export default function App() {
             </p>
             <div className="mt-4 flex flex-col gap-3 text-sm text-zinc-400">
               <a
-                href="#servicios-heading"
+                href="#sobre-nosotros"
+                className="transition-colors hover:text-amber-300"
+              >
+                Sobre nosotros
+              </a>
+              <a
+                href="#servicios"
                 className="transition-colors hover:text-amber-300"
               >
                 Servicios
               </a>
               <a
-                href="#proceso-heading"
+                href="#proceso"
                 className="transition-colors hover:text-amber-300"
               >
                 Proceso de trabajo
@@ -678,7 +965,7 @@ export default function App() {
                 href="#contacto"
                 className="transition-colors hover:text-amber-300"
               >
-                Contacto comercial
+                Contacto de servicios
               </a>
             </div>
           </div>
@@ -689,34 +976,34 @@ export default function App() {
             </p>
             <div className="mt-4 flex flex-col gap-3 text-sm text-zinc-400">
               <a
-                href="https://wa.me/56912345678"
+                href="https://wa.me/5493871234567"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 transition-colors hover:text-emerald-300"
               >
                 <MessageCircle size={15} className="text-emerald-300" />
-                WhatsApp: +56 9 1234 5678
+                WhatsApp: +54 9 387 123 4567
               </a>
               <a
-                href="tel:+56912345678"
+                href="tel:+5493871234567"
                 className="inline-flex items-center gap-2 transition-colors hover:text-amber-300"
               >
                 <Phone size={15} className="text-amber-300" />
-                +56 9 1234 5678
+                +54 9 387 123 4567
               </a>
               <a
-                href="mailto:ventas@lunametal.cl"
+                href="mailto:contacto@lunametal.com.ar"
                 className="inline-flex items-center gap-2 transition-colors hover:text-amber-300"
               >
                 <Mail size={15} className="text-amber-300" />
-                ventas@lunametal.cl
+                contacto@lunametal.com.ar
               </a>
               <p className="inline-flex items-center gap-2">
                 <MapPin size={15} className="text-amber-300" />
-                Antofagasta, Chile
+                Salta, Argentina
               </p>
               <p className="pt-2 text-xs uppercase tracking-[0.18em] text-zinc-500">
-                Respuesta comercial en menos de 24 horas habiles
+                Respuesta tecnica en menos de 24 horas habiles
               </p>
             </div>
           </div>
@@ -729,8 +1016,8 @@ export default function App() {
               derechos reservados.
             </p>
             <p>
-              Metalurgia industrial para mineria en Chile. Soporte comercial y
-              tecnico para faenas de alta exigencia.
+              Servicios metalurgicos e industriales en Argentina. Soporte
+              tecnico para operaciones de alta exigencia.
             </p>
           </div>
         </div>
