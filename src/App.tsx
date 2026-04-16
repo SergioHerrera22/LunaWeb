@@ -352,18 +352,10 @@ export default function App() {
             href="#inicio"
             onClick={handleNavClick("inicio")}
             aria-label="Luna Metal Industrial - Inicio"
-            className="group hidden items-center gap-3 md:flex"
+            className="group inline-flex items-center"
           >
-            <div className="grid h-11 w-11 place-items-center rounded-md bg-amber-500 text-zinc-950 shadow-md shadow-amber-500/20 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-amber-500/40">
-              <HardHat size={23} strokeWidth={2.5} />
-            </div>
-            <div>
-              <p className="font-heading text-xl uppercase tracking-widest text-zinc-100">
-                Luna Metal
-              </p>
-              <p className="text-xs uppercase tracking-[0.25em] text-zinc-400">
-                Servicios industriales para mineria
-              </p>
+            <div className="grid h-10 w-10 place-items-center rounded-md bg-amber-500 text-zinc-950 shadow-md shadow-amber-500/20 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-amber-500/40">
+              <HardHat size={21} strokeWidth={2.5} />
             </div>
           </a>
 
