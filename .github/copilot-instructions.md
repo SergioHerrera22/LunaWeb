@@ -1,0 +1,9 @@
+- [x] Verify that the copilot-instructions.md file in the .github directory is created.
+- [x] Clarify Project Requirements (React + TypeScript + Tailwind requested by user).
+- [x] Scaffold the Project (manual Vite-compatible scaffold in current root because automated scaffold in terminal was not stable).
+- [x] Customize the Project (industrial/mining landing page with icons, imagery and commercial sections).
+- [x] Install Required Extensions (no extensions required by setup info).
+- [x] Compile the Project (validated with npx vite build).
+- [x] Create and Run Task (skipped: not required for this delivery).
+- [x] Launch the Project (skipped pending explicit user confirmation for debug launch).
+- [x] Ensure Documentation is Complete (README added and this file cleaned).
