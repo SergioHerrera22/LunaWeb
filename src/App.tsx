@@ -448,17 +448,17 @@ export default function App() {
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-300 opacity-60" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-amber-300" />
                 </span>
-                Empresa argentina de servicios metalurgicos
+                Empresa argentina de servicios metalúrgicos
               </span>
 
               <h1 className="font-heading text-4xl uppercase leading-tight text-zinc-100 sm:text-5xl lg:text-6xl">
-                Servicios de ingenieria y ejecucion{" "}
-                <span className="gradient-text">metalurgica</span> que sostiene
-                la operacion minera
+                Servicios de ingeniería y ejecución{" "}
+                <span className="gradient-text">metalúrgica</span> que sostiene
+                la operación minera
               </h1>
 
               <p className="max-w-2xl text-base leading-relaxed text-zinc-300 sm:text-lg">
-                Brindamos servicios de diagnostico, ingenieria, fabricacion a
+                Brindamos servicios de diagnóstico, ingeniería, fabricación a
                 medida y montaje en campo para operaciones de alta exigencia.
                 Trabajamos por proyecto, con foco en seguridad, cumplimiento y
                 continuidad operacional.
@@ -469,7 +469,7 @@ export default function App() {
                   href="#contacto"
                   className="group inline-flex items-center gap-2 rounded-md bg-amber-500 px-5 py-3 text-sm font-bold uppercase tracking-[0.18em] text-zinc-950 transition-all duration-200 hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/30"
                 >
-                  Solicitar visita tecnica
+                  Solicitar visita técnica
                   <ArrowRight
                     size={16}
                     className="transition-transform duration-200 group-hover:translate-x-1.5"
@@ -492,7 +492,7 @@ export default function App() {
               />
               <img
                 src="https://images.unsplash.com/photo-1573164574230-db1d5e960238?auto=format&fit=crop&w=1200&q=80"
-                alt="Trabajadores metalurgicos en planta minera industrial"
+                alt="Trabajadores metalúrgicos en planta minera industrial"
                 width={1200}
                 height={800}
                 className="relative h-140 w-full rounded-2xl object-cover shadow-2xl shadow-zinc-950/70"
