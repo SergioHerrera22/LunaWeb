@@ -1055,7 +1055,7 @@ export default function App() {
         }`}
       >
         <span className="whatsapp-tooltip" aria-hidden="true">
-          Escríbenos
+          Escribenos Ahora
         </span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
