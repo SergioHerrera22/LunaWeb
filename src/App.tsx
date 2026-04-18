@@ -1050,17 +1050,22 @@ export default function App() {
         target="_blank"
         rel="noreferrer"
         aria-label="Contactar por WhatsApp"
-        className={`whatsapp-float group fixed bottom-5 right-5 z-50 inline-flex items-center gap-2 rounded-full border border-emerald-300/35 bg-emerald-500 px-3 py-3 text-zinc-950 shadow-lg shadow-emerald-900/40 transition-all duration-200 hover:-translate-y-0.5 hover:bg-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 sm:px-4 ${
+        className={`whatsapp-float group fixed bottom-5 right-5 z-50 inline-flex h-12 w-12 items-center justify-center rounded-full border border-emerald-300/35 bg-emerald-500 p-0 text-zinc-950 shadow-lg shadow-emerald-900/40 transition-all duration-200 hover:-translate-y-0.5 hover:bg-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 ${
           showWhatsappHint ? "show-tooltip" : ""
         }`}
       >
         <span className="whatsapp-tooltip" aria-hidden="true">
           Escribenos ahora
         </span>
-        <MessageCircle size={20} className="shrink-0" />
-        <span className="hidden text-xs font-bold uppercase tracking-[0.16em] sm:inline">
-          WhatsApp
-        </span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 16 16"
+          aria-hidden="true"
+          className="h-5 w-5 shrink-0 fill-current"
+        >
+          <path d="M13.601 2.326A7.854 7.854 0 0 0 8.014 0C3.685 0 .163 3.525.161 7.858c0 1.387.363 2.742 1.053 3.94L0 16l4.304-1.128a7.84 7.84 0 0 0 3.706.947h.004c4.329 0 7.852-3.526 7.854-7.858a7.83 7.83 0 0 0-2.267-5.635zm-5.587 12.17h-.003a6.54 6.54 0 0 1-3.335-.913l-.239-.142-2.554.67.682-2.49-.156-.255A6.53 6.53 0 0 1 1.405 7.86c.002-3.603 2.933-6.534 6.61-6.534a6.57 6.57 0 0 1 4.679 1.943A6.53 6.53 0 0 1 14.037 7.86c-.002 3.604-2.933 6.536-6.61 6.536z" />
+          <path d="M11.64 9.58c-.203-.102-1.2-.592-1.386-.658-.186-.068-.322-.102-.458.102-.136.203-.526.658-.645.794-.118.135-.237.152-.44.05-.203-.101-.857-.316-1.633-1.007-.603-.538-1.01-1.202-1.128-1.405-.119-.203-.013-.313.088-.415.09-.089.203-.237.305-.355.102-.118.136-.203.203-.338.068-.136.034-.254-.017-.355-.05-.102-.458-1.103-.627-1.512-.165-.395-.333-.34-.458-.347l-.39-.007a.75.75 0 0 0-.542.254c-.186.203-.711.694-.711 1.693 0 .997.728 1.96.829 2.096.102.135 1.432 2.194 3.47 3.077.485.21.863.334 1.158.428.487.156.929.134 1.28.081.39-.058 1.2-.49 1.37-.963.169-.474.169-.88.118-.963-.05-.084-.186-.135-.39-.237z" />
+        </svg>
       </a>
     </div>
   );
