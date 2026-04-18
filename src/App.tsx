@@ -99,9 +99,9 @@ function Reveal({
 const services = [
   {
     icon: Factory,
-    title: "Ingenieria y fabricacion a medida",
+    title: "Ingeniería y fabricación a medida",
     description:
-      "Desarrollamos y ejecutamos soluciones metalmecanicas para operacion minera e industrial, sin comercializar productos de catalogo.",
+      "Desarrollamos y ejecutamos soluciones metalmecánicas para operación minera e industrial, sin comercializar productos de catálogo.",
   },
   {
     icon: Wrench,
@@ -111,30 +111,30 @@ const services = [
   },
   {
     icon: Drill,
-    title: "Montaje de equipos criticos",
+    title: "Montaje de equipos críticos",
     description:
-      "Realizamos alineamiento, montaje y puesta en marcha de sistemas metalicos bajo estandares estrictos de seguridad.",
+      "Realizamos alineamiento, montaje y puesta en marcha de sistemas metálicos bajo estándares estrictos de seguridad.",
   },
 ];
 
 const serviceDifferentials = [
   {
     icon: ClipboardList,
-    title: "Alcance tecnico por frente de trabajo",
+    title: "Alcance técnico por frente de trabajo",
     description:
-      "Definimos actividades, recursos, secuencia y criterios de aceptacion para cada servicio antes de iniciar ejecucion.",
+      "Definimos actividades, recursos, secuencia y criterios de aceptación para cada servicio antes de iniciar ejecución.",
   },
   {
     icon: HardHat,
-    title: "Ejecucion segura en terreno minero",
+    title: "Ejecución segura en terreno minero",
     description:
-      "Operamos con personal habilitado, control de riesgos en sitio y coordinacion con protocolos HSEC del mandante.",
+      "Operamos con personal habilitado, control de riesgos en sitio y coordinación con protocolos HSEC del mandante.",
   },
   {
     icon: Cog,
     title: "Trazabilidad y control de calidad",
     description:
-      "Documentamos avances, verificaciones y cierre tecnico para asegurar continuidad operativa y cumplimiento contractual.",
+      "Documentamos avances, verificaciones y cierre técnico para asegurar continuidad operativa y cumplimiento contractual.",
   },
 ];
 
@@ -158,18 +158,18 @@ const stats: {
 const projects = [
   {
     title: "Revestimiento antiabrasivo para chute primario",
-    location: "Division Norte",
+    location: "División Norte",
     image:
       "https://images.unsplash.com/photo-1581094271901-8022df4466f9?auto=format&fit=crop&w=1200&q=80",
   },
   {
-    title: "Fabricacion de pasarelas y estructuras de proceso",
+    title: "Fabricación de pasarelas y estructuras de proceso",
     location: "Complejo Cordillera",
     image:
       "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=1200&q=80",
   },
   {
-    title: "Recuperacion de tolvas de alimentacion",
+    title: "Recuperación de tolvas de alimentación",
     location: "Mina Los Andes",
     image:
       "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80",
@@ -180,27 +180,27 @@ const steps = [
   {
     icon: ClipboardList,
     step: "01",
-    title: "Levantamiento tecnico",
-    desc: "Visita a terreno y diagnostico detallado del alcance y riesgos del trabajo.",
+    title: "Levantamiento técnico",
+    desc: "Visita a terreno y diagnóstico detallado del alcance y riesgos del trabajo.",
   },
   {
     icon: Cog,
     step: "02",
-    title: "Ingenieria y fabricacion",
-    desc: "Diseno, modelado y fabricacion en taller con control de calidad documentado.",
+    title: "Ingeniería y fabricación",
+    desc: "Diseño, modelado y fabricación en taller con control de calidad documentado.",
   },
   {
     icon: Truck,
     step: "03",
     title: "Montaje y entrega",
-    desc: "Ejecucion en faena, pruebas de funcionamiento y traspaso con reporte final.",
+    desc: "Ejecución en faena, pruebas de funcionamiento y traspaso con reporte final.",
   },
 ];
 
 const aboutPoints = [
   "Somos una empresa argentina con base operativa en el NOA y cobertura nacional.",
-  "Prestamos servicios de ingenieria, fabricacion, montaje y mantenimiento para industria y mineria.",
-  "No comercializamos productos en serie: cada servicio se define segun objetivo, contexto y criticidad.",
+  "Prestamos servicios de ingeniería, fabricación, montaje y mantenimiento para industria y minería.",
+  "No comercializamos productos en serie: cada servicio se define según objetivo, contexto y criticidad.",
 ];
 
 const navItems = [
@@ -505,11 +505,11 @@ export default function App() {
                   Servicio destacado
                 </p>
                 <p className="mt-1 font-semibold text-zinc-100">
-                  Reingenieria estructural en planta concentradora
+                  Reingeniería estructural en planta concentradora
                 </p>
                 <p className="mt-1.5 text-sm text-zinc-300">
                   Mejora del <strong className="text-amber-300">22%</strong> en
-                  vida util de componentes sometidos a abrasion.
+                  vida útil de componentes sometidos a abrasión.
                 </p>
               </div>
             </div>
@@ -653,10 +653,10 @@ export default function App() {
                   Equipo argentino especializado en servicios industriales
                 </h2>
                 <p className="mt-4 text-sm leading-relaxed text-zinc-400">
-                  En Luna Metal trabajamos como socio tecnico para empresas que
-                  necesitan resolver desafios operativos complejos. Nuestra
+                  En Luna Metal trabajamos como socio técnico para empresas que
+                  necesitan resolver desafíos operativos complejos. Nuestra
                   propuesta se centra en prestar servicios de principio a fin,
-                  no en vender productos estandar.
+                  no en vender productos estándar.
                 </p>
               </div>
 
@@ -685,7 +685,7 @@ export default function App() {
           <Reveal>
             <div className="mb-10 text-center">
               <p className="text-xs uppercase tracking-[0.22em] text-amber-300">
-                Como trabajamos
+                Cómo trabajamos
               </p>
               <h2
                 id="proceso-heading"
@@ -737,15 +737,15 @@ export default function App() {
                   Ejecutamos servicios de alto impacto para grandes operaciones
                 </h2>
                 <p className="mt-4 text-sm leading-relaxed text-zinc-400">
-                  Coordinamos ingenieria, taller y montaje en terreno para
-                  responder a desafios de produccion continua, manteniendo
+                  Coordinamos ingeniería, taller y montaje en terreno para
+                  responder a desafíos de producción continua, manteniendo
                   productividad, seguridad y cumplimiento contractual.
                 </p>
                 <ul className="mt-6 space-y-3 text-sm text-zinc-300">
                   {[
-                    "Protocolos HSEC alineados a estandares de mandantes mineros.",
+                    "Protocolos HSEC alineados a estándares de mandantes mineros.",
                     "Soldadores y supervisores certificados para faena de alta exigencia.",
-                    "Logistica y respuesta rapida para ventanas cortas de mantencion.",
+                    "Logística y respuesta rápida para ventanas cortas de mantención.",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-2.5">
                       <ShieldCheck
@@ -851,13 +851,13 @@ export default function App() {
                     id="contacto-heading"
                     className="mt-3 font-heading text-3xl uppercase text-white sm:text-4xl lg:text-5xl"
                   >
-                    Convirtamos su desafio en una{" "}
+                    Convirtamos su desafío en una{" "}
                     <span className="gradient-text">ventaja operativa</span>
                   </h2>
                   <p className="mt-3 max-w-xl text-sm leading-relaxed text-zinc-300">
-                    Agende una reunion tecnica y reciba una propuesta de
-                    servicio con alcance, cronograma y plan de ejecucion para su
-                    operacion minera o industrial.
+                    Agende una reunión técnica y reciba una propuesta de
+                    servicio con alcance, cronograma y plan de ejecución para su
+                    operación minera o industrial.
                   </p>
                   <div className="mt-5 flex flex-col gap-3 text-sm text-zinc-300 sm:flex-row sm:flex-wrap sm:gap-6">
                     <a
@@ -889,7 +889,7 @@ export default function App() {
                     className="absolute inset-0 rounded-xl ring-0 ring-amber-400/50 transition-all duration-300 group-hover:ring-4"
                     aria-hidden="true"
                   />
-                  Hablar con un asesor tecnico
+                  Hablar con un asesor técnico
                   <ArrowRight
                     size={16}
                     className="transition-transform duration-200 group-hover:translate-x-1"
@@ -923,13 +923,13 @@ export default function App() {
                   Luna Metal Industrial
                 </p>
                 <p className="text-xs uppercase tracking-[0.22em] text-zinc-500">
-                  Servicios industriales para mineria
+                  Servicios industriales para minería
                 </p>
               </div>
             </div>
 
             <p className="mt-4 text-sm leading-relaxed text-zinc-400">
-              Prestamos servicios de ingenieria aplicada, fabricacion a medida,
+              Prestamos servicios de ingeniería aplicada, fabricación a medida,
               mantenimiento y montaje para operaciones que exigen continuidad,
               seguridad y cumplimiento.
             </p>
@@ -942,21 +942,21 @@ export default function App() {
                 className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-emerald-300 transition-all duration-200 hover:border-emerald-400/60 hover:bg-emerald-500/15"
               >
                 <MessageCircle size={14} />
-                WhatsApp tecnico
+                WhatsApp técnico
               </a>
               <a
                 href="mailto:contacto@lunametal.com.ar"
                 className="inline-flex items-center gap-2 rounded-full border border-zinc-700/70 bg-zinc-900/70 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-300 transition-all duration-200 hover:border-amber-500/40 hover:text-amber-300"
               >
                 <Mail size={14} />
-                Contacto tecnico
+                Contacto técnico
               </a>
             </div>
           </div>
 
           <div>
             <p className="font-heading text-sm uppercase tracking-[0.2em] text-zinc-200">
-              Accesos rapidos
+              Accesos rápidos
             </p>
             <div className="mt-4 flex flex-col gap-3 text-sm text-zinc-400">
               <a
@@ -1025,7 +1025,7 @@ export default function App() {
                 Salta, Argentina
               </p>
               <p className="pt-2 text-xs uppercase tracking-[0.18em] text-zinc-500">
-                Respuesta tecnica en menos de 24 horas habiles
+                Respuesta técnica en menos de 24 horas hábiles
               </p>
             </div>
           </div>
@@ -1038,8 +1038,8 @@ export default function App() {
               derechos reservados.
             </p>
             <p>
-              Servicios metalurgicos e industriales en Argentina. Soporte
-              tecnico para operaciones de alta exigencia.
+              Servicios metalúrgicos e industriales en Argentina. Soporte
+              técnico para operaciones de alta exigencia.
             </p>
           </div>
         </div>
