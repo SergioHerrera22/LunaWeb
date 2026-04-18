@@ -1,4 +1,10 @@
-import { useEffect, useRef, useState, type MouseEvent, type ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type MouseEvent,
+  type ReactNode,
+} from "react";
 import {
   ArrowRight,
   ChevronLeft,
@@ -244,6 +250,7 @@ export default function App() {
   const [activeSection, setActiveSection] = useState("inicio");
   const [servicesIndex, setServicesIndex] = useState(0);
   const [projectsIndex, setProjectsIndex] = useState(0);
+  const [showWhatsappHint, setShowWhatsappHint] = useState(false);
   const statsRef = useRef<HTMLDivElement>(null);
   const [statsVisible, setStatsVisible] = useState(false);
 
@@ -318,6 +325,26 @@ export default function App() {
     return () => window.clearInterval(id);
   }, []);
 
+  useEffect(() => {
+    let hideTimeoutId = 0;
+
+    const showHint = () => {
+      setShowWhatsappHint(true);
+      hideTimeoutId = window.setTimeout(() => {
+        setShowWhatsappHint(false);
+      }, 3200);
+    };
+
+    const initialId = window.setTimeout(showHint, 5000);
+    const intervalId = window.setInterval(showHint, 20000);
+
+    return () => {
+      window.clearTimeout(initialId);
+      window.clearInterval(intervalId);
+      window.clearTimeout(hideTimeoutId);
+    };
+  }, []);
+
   const prevService = () =>
     setServicesIndex((prev) => (prev - 1 + services.length) % services.length);
   const nextService = () =>
@@ -327,14 +354,15 @@ export default function App() {
   const nextProject = () =>
     setProjectsIndex((prev) => (prev + 1) % projects.length);
 
-  const handleNavClick = (id: string) => (event: MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
-    const section = document.getElementById(id);
-    if (!section) return;
-    setActiveSection(id);
-    section.scrollIntoView({ behavior: "smooth", block: "start" });
-    window.history.replaceState(null, "", `#${id}`);
-  };
+  const handleNavClick =
+    (id: string) => (event: MouseEvent<HTMLAnchorElement>) => {
+      event.preventDefault();
+      const section = document.getElementById(id);
+      if (!section) return;
+      setActiveSection(id);
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.history.replaceState(null, "", `#${id}`);
+    };
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100">
@@ -585,26 +613,28 @@ export default function App() {
           </Reveal>
 
           <div className="grid gap-6 md:grid-cols-3">
-            {serviceDifferentials.map(({ icon: Icon, title, description }, i) => (
-              <Reveal key={title} delay={i * 120}>
-                <article className="group relative h-full overflow-hidden rounded-xl border border-zinc-800/80 bg-linear-to-b from-zinc-900/80 to-zinc-900/40 p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-amber-400/50 hover:shadow-xl hover:shadow-black/30">
-                  <div
-                    className="shine-sweep pointer-events-none absolute inset-0"
-                    aria-hidden="true"
-                  />
-                  <div className="mb-5 inline-flex rounded-lg bg-zinc-800/80 p-3 text-amber-300 transition-all duration-300 group-hover:bg-amber-500 group-hover:text-zinc-950 group-hover:shadow-md group-hover:shadow-amber-500/30">
-                    <Icon size={22} />
-                  </div>
-                  <h3 className="font-heading text-xl uppercase text-zinc-100">
-                    {title}
-                  </h3>
-                  <div className="mt-2 h-0.5 w-8 rounded-full bg-amber-500/50 transition-all duration-500 group-hover:w-14 group-hover:bg-amber-400" />
-                  <p className="mt-3 text-sm leading-relaxed text-zinc-400">
-                    {description}
-                  </p>
-                </article>
-              </Reveal>
-            ))}
+            {serviceDifferentials.map(
+              ({ icon: Icon, title, description }, i) => (
+                <Reveal key={title} delay={i * 120}>
+                  <article className="group relative h-full overflow-hidden rounded-xl border border-zinc-800/80 bg-linear-to-b from-zinc-900/80 to-zinc-900/40 p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-amber-400/50 hover:shadow-xl hover:shadow-black/30">
+                    <div
+                      className="shine-sweep pointer-events-none absolute inset-0"
+                      aria-hidden="true"
+                    />
+                    <div className="mb-5 inline-flex rounded-lg bg-zinc-800/80 p-3 text-amber-300 transition-all duration-300 group-hover:bg-amber-500 group-hover:text-zinc-950 group-hover:shadow-md group-hover:shadow-amber-500/30">
+                      <Icon size={22} />
+                    </div>
+                    <h3 className="font-heading text-xl uppercase text-zinc-100">
+                      {title}
+                    </h3>
+                    <div className="mt-2 h-0.5 w-8 rounded-full bg-amber-500/50 transition-all duration-500 group-hover:w-14 group-hover:bg-amber-400" />
+                    <p className="mt-3 text-sm leading-relaxed text-zinc-400">
+                      {description}
+                    </p>
+                  </article>
+                </Reveal>
+              ),
+            )}
           </div>
         </section>
 
@@ -1014,6 +1044,24 @@ export default function App() {
           </div>
         </div>
       </footer>
+
+      <a
+        href="https://wa.me/5493871234567?text=Hola%20Luna%20Metal%2C%20quiero%20cotizar%20un%20servicio."
+        target="_blank"
+        rel="noreferrer"
+        aria-label="Contactar por WhatsApp"
+        className={`whatsapp-float group fixed bottom-5 right-5 z-50 inline-flex items-center gap-2 rounded-full border border-emerald-300/35 bg-emerald-500 px-3 py-3 text-zinc-950 shadow-lg shadow-emerald-900/40 transition-all duration-200 hover:-translate-y-0.5 hover:bg-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 sm:px-4 ${
+          showWhatsappHint ? "show-tooltip" : ""
+        }`}
+      >
+        <span className="whatsapp-tooltip" aria-hidden="true">
+          Escribenos ahora
+        </span>
+        <MessageCircle size={20} className="shrink-0" />
+        <span className="hidden text-xs font-bold uppercase tracking-[0.16em] sm:inline">
+          WhatsApp
+        </span>
+      </a>
     </div>
   );
 }
